@@ -4,8 +4,10 @@ const Comment = require('../models/Comment');
 // Create a new post
 exports.createPost = async (req, res) => {
   try {
-    const { description, user_id } = req.body;
-    const post = await Post.create({ description, user_id });
+    const { description } = req.body;
+    const userId = req.userId; // Get the user ID from the authenticated request
+
+    const post = await Post.create({ description, user_id: userId });
     res.status(201).json({ success: true, data: post });
   } catch (error) {
     res.status(500).json({ success: false, error: error.message });
